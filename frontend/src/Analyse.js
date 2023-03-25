@@ -1,9 +1,10 @@
 import { Line } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import NavBar from './NavBar';
+import { useNavigate } from 'react-router-dom'
 import './Analyse.css'
 import axios from 'axios';
-
+import Forecast from './Forecast';
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -48,6 +49,8 @@ export const xgbOptions = {
 
 export default function Analyse(){
 
+	const navigate = useNavigate();
+	const gotoForecast = ()=>{navigate('/forecast')}
 	const [tensionval, setTensionVal] = useState(0)
 	const [LstmMode, setLstmMode] = useState(true)
 	const [prodname, setProdName] = useState("")
@@ -189,6 +192,7 @@ export default function Analyse(){
 							}}
 							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
 						</div>
+<<<<<<< Updated upstream
 						{/* <div className='control-pair'>
 							<p id='mode-switch-btn'
 							onClick={()=>{
@@ -196,6 +200,17 @@ export default function Analyse(){
 							}}
 							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
 						</div> */}
+=======
+						<div className='control-pair'>
+							<p id='mode-switch-btn'
+							onClick={()=>{
+								gotoForecast()
+							}	}
+							><img width={{width: "100px"}} src={require("./clock.gif")} ></img></p>
+							
+						</div>
+							
+>>>>>>> Stashed changes
 					</div>
 				</div>
 
