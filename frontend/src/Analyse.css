@@ -32,7 +32,8 @@
 }
 
 .param, .pvalue {
-	width: 20%;
+	width: 30%;
+	font-size: 1.5rem;
 }
 
 #controls {
@@ -95,3 +96,11 @@
 	/* align-items: flex-start; */
 	height: 100vh;
 }
+
+#maiin-ctn {
+	height: 100px;
+}
+
+/* body {
+	height: 100vh
+} */
