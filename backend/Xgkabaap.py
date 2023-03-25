@@ -2,7 +2,6 @@
 # # assign directory
 # directory = 'ProductsCleanDatasets'
  
-            recieved  =   XGboost_forecast.setdsetandload(filename)
 # # iterate over files in
 # # that directory
 # trained_models=dict()
