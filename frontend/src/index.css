@@ -10,12 +10,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #8E7EA4;
+  height: 100%;
+  overflow: hidden;
 }
 
 html {
   margin: 0;
   padding: 0;
   background-color: #8E7EA4;
+  height: 100%;
+  overflow: hidden;
 }
 
 code {

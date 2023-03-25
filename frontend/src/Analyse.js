@@ -1,5 +1,5 @@
 import { Line } from 'react-chartjs-2';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavBar from './NavBar';
 import './Analyse.css'
 import axios from 'axios';
@@ -49,7 +49,7 @@ export const xgbOptions = {
 export default function Analyse(){
 
 	const [tensionval, setTensionVal] = useState(0)
-	const [usingLstm, setUsingLstm] = useState(true)
+	const [LstmMode, setLstmMode] = useState(true)
 	const [prodname, setProdName] = useState("")
 	const [tillDate, setTillDate] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 	const [predicted, setPredicted] = useState([13, 14, 15, 16])
@@ -98,17 +98,61 @@ export default function Analyse(){
 	const reqFromBackend = (e)=>{
 		if (e.which == 13){
 			let ele = document.getElementById('product-input')
-			axios.post('http://127.0.0.1:5000/prod', {
+			if (LstmMode){
+				axios.post('http://127.0.0.1:5000/lstm', {
+					"PLID": ele.value
+					})
+					.then(function (response) {
+					if (response["data"] != "Error"){
+						setProdName(response["data"][0])
+						setTillDate(response["data"][1])
+						setPredicted(response["data"][2])
+						updateSGV()
+					}
+					})
+			}
+			else {
+				axios.post('http://127.0.0.1:5000/xgb', {
+					"PLID": ele.value
+					})
+					.then(function (response) {
+						console.log(response)
+						// let ele = document.getElementById('product-input')
+						setProdName(response["data"][0])
+						setTillDate(response["data"][1])
+						setPredicted(response["data"][2])
+						updateSGV()
+					})
+			}
+		}
+	}
+	const reqFromBackendForce = (lstmMode2)=>{
+		let ele = document.getElementById('product-input')
+		if (lstmMode2 === true){
+			axios.post('http://127.0.0.1:5000/lstm', {
 				"PLID": ele.value
-			  })
-			  .then(function (response) {
+				})
+				.then(function (response) {
 				if (response["data"] != "Error"){
 					setProdName(response["data"][0])
 					setTillDate(response["data"][1])
 					setPredicted(response["data"][2])
 					updateSGV()
 				}
-			  })
+				})
+		}
+		else {
+			axios.post('http://127.0.0.1:5000/xgb', {
+				"PLID": ele.value
+				})
+				.then(function (response) {
+					// console.log(response)
+					// let ele = document.getElementById('product-input')
+					setProdName(response["data"][0])
+					setTillDate(response["data"][1])
+					setPredicted(response["data"][2])
+					updateSGV()
+				})
 		}
 	}
 
@@ -134,17 +178,31 @@ export default function Analyse(){
 						<div className='control-pair'>
 							<p id='mode-switch-btn'
 							onClick={()=>{
-								setUsingLstm(!usingLstm)
+								// console.log(LstmMode)
+								setLstmMode((!LstmMode));
+								if (LstmMode)
+									reqFromBackendForce(false)
+								else
+									reqFromBackendForce(true)
+								
+								
 							}}
-							>Switch to {usingLstm?"XG Boost":"LSTM"} Mode</p>
+							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
 						</div>
+						{/* <div className='control-pair'>
+							<p id='mode-switch-btn'
+							onClick={()=>{
+								setLstmMode(!LstmMode)
+							}}
+							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
+						</div> */}
 					</div>
 				</div>
 
 
 				<div id='rightside'>
 					<p id='right-title'>Analysis</p>
-					{usingLstm?<Line data={data} options={lstmOptions} id='lstm-chart'></Line>:<Line data={data} options={xgbOptions} id='xgboost-chart'></Line>}
+					{LstmMode?<Line data={data} options={lstmOptions} id='lstm-chart'></Line>:<Line data={data} options={xgbOptions} id='xgboost-chart'></Line>}
 					
 					
 				</div>
