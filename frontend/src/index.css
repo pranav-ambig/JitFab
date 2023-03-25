@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Jost';
+  src: local('Jost'), url(../assets/Jost.ttf) format('truetype');
+  
+}
+
+body {
+  margin: 0;
+  font-family: 'Jost';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #8E7EA4;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #8E7EA4;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
