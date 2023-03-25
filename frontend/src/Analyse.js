@@ -108,7 +108,7 @@ export default function Analyse(){
 							<p className='pvalue'>{prodname}</p>
 						</div>
 						<div className='control-pair'>
-							<p className='param'>Smoothness:</p>
+							<p className='param'>Smoothing:</p>
 							<input className='pvalue' id='tensionval' type={'range'} onChange={rangeHandler} />
 						</div>
 						<ReportsPage PLID={"abc"} Amount={3} InvLocation={"Sirsi"} ></ReportsPage>
