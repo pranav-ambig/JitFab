@@ -244,11 +244,12 @@ plot_df = pd.DataFrame({"Forecasts" : test_forecasts.flatten(), "Targets" : y_te
 print( "relative error" , ( test_mae / sum(y_test)/len(y_test))[0]  * 100 , "%")
 
 # from time import sleep
+tempout = [[21432,39989],[23162,46255]]
 # n=20
 # while(n!=0):
 #     n-=1
 
-def Ultimate_out(tempout = [[21432,39989],[23162,46255]]):
+def Ultimate_out():
     return trained_model.predict(tempout)
 
 # predval = 
