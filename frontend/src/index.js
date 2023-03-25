@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Products from './Products';
 import Analyse from './Analyse';
+import Forecast from './Forecast';
 import reportWebVitals from './reportWebVitals';
 
 import {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path:'/about',
     element: <App/>
+  },
+  {
+    path:'/forecast',
+    element: <Forecast/>
   }
 ])
 

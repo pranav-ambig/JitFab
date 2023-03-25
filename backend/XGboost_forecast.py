@@ -79,11 +79,11 @@ def setdsetandload(datasetused):
     def load_data():
 
         # Read data
-        spotprices = pd.read_csv("ProductsDatasets/"+datasetused, delimiter=",")
+        spotprices = pd.read_csv("ProductsCleanDatasets/"+datasetused, delimiter=",")
         print(len(spotprices))
-        if len(spotprices)<=20:
+        if len(spotprices)<=25:
             raise TooFewDataPointError
-        spotprices.dropna()
+        # spotprices.dropna()
         
     #     target_variable = "SpotPriceEUR"
         target_variable = "Booked_Qty"
@@ -97,7 +97,7 @@ def setdsetandload(datasetused):
         spotprices[target_variable] = pd.to_numeric(spotprices["Booked_Qty"])
 
         # Convert HourDK to proper date time and make it index
-        spotprices[timestamp_col] = pd.to_datetime(spotprices[timestamp_col])
+        spotprices[timestamp_col] = pd.to_datetime(spotprices[timestamp_col],format = "%d-%m-%Y")
         
         spotprices.index = pd.to_datetime(spotprices[timestamp_col])
 
@@ -105,7 +105,7 @@ def setdsetandload(datasetused):
         spotprices = spotprices[[target_variable]]
 
         # Order by ascending time stamp
-        spotprices.sort_values(by=timestamp_col, ascending=True, inplace=True)
+        # spotprices.sort_values(by=timestamp_col, ascending=True, inplace=True)
 
         return spotprices
 
@@ -167,7 +167,7 @@ def setdsetandload(datasetused):
 
     target_sequence_length = 1*8
 
-    test_size = 0.30
+    # test_size = 0.30
 
     first_day_test = "2019-06-01"
 
@@ -185,12 +185,12 @@ def setdsetandload(datasetused):
         }
 
     spotprices = load_data()
-
-    training_data = spotprices[spotprices.index < first_day_test]
+    numborder = len(spotprices)-18
+    training_data = spotprices[0:numborder]
     # pd.display(training_data)
     # print(len(training_data))
-    test_data = spotprices[spotprices.index >= first_day_test]
-    test_data = test_data[test_data.index <= last_day_test]
+    test_data = spotprices[numborder:None]
+    # test_data = test_data[test_data.index <= last_day_test]
 
     # Create indices. Must be passed to function that creates (X,Y) pairs so that
     # it knows where to slice the data
