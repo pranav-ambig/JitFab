@@ -8,6 +8,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	z-index: 10;
   }
   
   #left {
@@ -17,18 +18,22 @@
 	height: 4rem;
 	flex-direction: row;
 	align-items: center;
+	z-index: 11;
   }
   
   #right {
 	margin-right: 5rem;
+	z-index: 11;
   }
   
   #title {
 	font-size: 1.5rem;
+	z-index: 11;
   }
   
   .NavbarText {
 	color: #8E7EA4;
 	font-size: 1.2rem;
 	cursor: pointer;
+	z-index: 11;
   }

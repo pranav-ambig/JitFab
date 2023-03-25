@@ -25,14 +25,31 @@ Tooltip,
 Legend
 );
 
-export const options = {
-	responsive:true
+export const lstmOptions = {
+	responsive:true,
+	plugins: {
+		title: {
+			display:true,
+			text: 'LSTM'
+		}
+	}
+}
+
+export const xgbOptions = {
+	responsive:true,
+	plugins: {
+		title: {
+			display:true,
+			text: 'XG Boost'
+		}
+	}
 }
 
 
 export default function Analyse(){
 
-	const [tensionval, setTensionVal] = useState(0.5)
+	const [tensionval, setTensionVal] = useState(0)
+	const [usingLstm, setUsingLstm] = useState(true)
 	const [prodname, setProdName] = useState("")
 	const [tillDate, setTillDate] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 	const [predicted, setPredicted] = useState([13, 14, 15, 16])
@@ -73,8 +90,9 @@ export default function Analyse(){
 
 	const rangeHandler = ()=>{
 		let ele = document.getElementById('tensionval')
-		// console.log(ele.value/100)
+		
 		setTensionVal(ele.value/100)
+		ele.value = ele.value
 	}
 
 	const reqFromBackend = (e)=>{
@@ -101,7 +119,7 @@ export default function Analyse(){
 
 				<div id='leftside'>
 					<p id='left-title'>Product</p>
-					<input id='product-input' type='text' placeholder='Search for a Product' onKeyDown={reqFromBackend}/>
+					<input id='product-input'  type='text' placeholder='Search for a Product' onKeyDown={reqFromBackend}/>
 					
 					<div id='controls'>
 						<div className='control-pair'>
@@ -110,7 +128,15 @@ export default function Analyse(){
 						</div>
 						<div className='control-pair'>
 							<p className='param'>Smoothing:</p>
-							<input className='pvalue' id='tensionval' type={'range'} onChange={rangeHandler} />
+							<input className='pvalue' defaultValue={tensionval} id='tensionval' type={'range'} onChange={rangeHandler} />
+						</div>
+
+						<div className='control-pair'>
+							<p id='mode-switch-btn'
+							onClick={()=>{
+								setUsingLstm(!usingLstm)
+							}}
+							>Switch to {usingLstm?"XG Boost":"LSTM"} Mode</p>
 						</div>
 					</div>
 				</div>
@@ -118,7 +144,9 @@ export default function Analyse(){
 
 				<div id='rightside'>
 					<p id='right-title'>Analysis</p>
-					<Line data={data} options={options} ></Line>
+					{usingLstm?<Line data={data} options={lstmOptions} id='lstm-chart'></Line>:<Line data={data} options={xgbOptions} id='xgboost-chart'></Line>}
+					
+					
 				</div>
 
 			</div>
