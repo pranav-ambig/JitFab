@@ -204,15 +204,6 @@ export default function Analyse(){
 							}}
 							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
 						</div>
-<<<<<<< Updated upstream
-						{/* <div className='control-pair'>
-							<p id='mode-switch-btn'
-							onClick={()=>{
-								setLstmMode(!LstmMode)
-							}}
-							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
-						</div> */}
-=======
 						<div className='control-pair'>
 							<p id='mode-switch-btn'
 							onClick={()=>{
@@ -222,7 +213,6 @@ export default function Analyse(){
 							
 						</div>
 							
->>>>>>> Stashed changes
 					</div>
 				</div>
 
