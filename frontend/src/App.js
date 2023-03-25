@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 function App() {
 
   const navigate = useNavigate();
-  const gotoProducts = ()=>{navigate('/products')}
+  const gotoAnalyse = ()=>{navigate('/analyse')}
 
   return (
     <div className="App">
@@ -27,8 +27,8 @@ function App() {
       <div id='strong-title'>JitFab</div>
       <div id='tagline'>Reliable Just-In-Time Solutions</div>
       <img src={require('./animation.gif')}></img>
-      <p id='get-started' onClick={gotoProducts} >Get Started</p>
-    
+      <p id='get-started' onClick={gotoAnalyse} >Get Started</p>
+
     </div>
   );
 }
