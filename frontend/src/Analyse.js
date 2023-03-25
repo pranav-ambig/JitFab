@@ -49,7 +49,7 @@ export const xgbOptions = {
 export default function Analyse(){
 
 	const [tensionval, setTensionVal] = useState(0)
-	const [LstmMode, setLstmMode] = useState(true)
+	const [LstmMode, setLstmMode] = useState(false)
 	const [prodname, setProdName] = useState("")
 	const [tillDate, setTillDate] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 	const [predicted, setPredicted] = useState([13, 14, 15, 16])
@@ -109,6 +109,9 @@ export default function Analyse(){
 						setPredicted(response["data"][2])
 						updateSGV()
 					}
+					else {
+						setProdName("Not present in DB")
+					}
 					})
 			}
 			else {
@@ -116,12 +119,15 @@ export default function Analyse(){
 					"PLID": ele.value
 					})
 					.then(function (response) {
-						console.log(response)
-						// let ele = document.getElementById('product-input')
-						setProdName(response["data"][0])
-						setTillDate(response["data"][1])
-						setPredicted(response["data"][2])
-						updateSGV()
+						if (response["data"] != "Error"){
+							setProdName(response["data"][0])
+							setTillDate(response["data"][1])
+							setPredicted(response["data"][2])
+							updateSGV()
+						}
+						else {
+							setProdName("Not present in DB")
+						}
 					})
 			}
 		}
@@ -139,6 +145,9 @@ export default function Analyse(){
 					setPredicted(response["data"][2])
 					updateSGV()
 				}
+				else {
+					setProdName("Not present in DB")
+				}
 				})
 		}
 		else {
@@ -146,12 +155,15 @@ export default function Analyse(){
 				"PLID": ele.value
 				})
 				.then(function (response) {
-					// console.log(response)
-					// let ele = document.getElementById('product-input')
-					setProdName(response["data"][0])
-					setTillDate(response["data"][1])
-					setPredicted(response["data"][2])
-					updateSGV()
+					if (response["data"] != "Error"){
+						setProdName(response["data"][0])
+						setTillDate(response["data"][1])
+						setPredicted(response["data"][2])
+						updateSGV()
+					}
+					else {
+						setProdName("Not present in DB")
+					}
 				})
 		}
 	}

@@ -4,7 +4,7 @@ from Xgkabaap import Ultimate_out
 import csv
 import random
 
-dir = 'ProductsDatasets'
+dir = 'ProductsCleanDatasets'
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client["JitFab"]
@@ -19,7 +19,7 @@ for file in os.scandir(dir):
 			n += 1
 			continue
 		else:
-			csvfile = open('ProductsDatasets/'+file.name, 'r')
+			csvfile = open(dir+'/'+file.name, 'r')
 			p += 1
 			reader = csv.DictReader( csvfile )
 			first = True
@@ -35,7 +35,7 @@ for file in os.scandir(dir):
 				else:
 					for field in header[4:]:
 						row[field].append(each[field])
-			row["pred"] = [random.randint(1, 10) for _ in range(4)]
+			row["pred"] = [random.randint(1, 100) for _ in range(4)]
 			products.insert_one(row)
 			# print(row)
 				

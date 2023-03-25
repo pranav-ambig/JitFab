@@ -27,6 +27,9 @@ def getProductsXG():
 	d = json.loads(request.data)
 	res = products.find_one(d)
 	out = Ultimate_out(d["PLID"]+".csv")
+	if out == "Sorry too low on **ata":
+		return "Error"
+	print("test", out)
 	out =  list(map(int, out[0]))
 	# print([res['PLID'], res['Booked_Qty'][-12:], json.loads(out[:4])])
 	# return out[:4]
