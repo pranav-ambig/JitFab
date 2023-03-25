@@ -47,12 +47,18 @@ export default function(){
             
         }else{
             // setstatecolor("#FEFD98")
+            let timerstop = false
             function uff (){
+              
               setTimeout(()=>{
-                if( !influxvaluehandler())
+                if( !timerstop && !influxvaluehandler())
                 uff()
+                else {
+                  timerstop=true;
+                  console.log("true set");
+                }
                 
-            },1000)
+            },100)
             }
             uff()
         }
