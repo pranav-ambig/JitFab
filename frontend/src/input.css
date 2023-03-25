@@ -1,8 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.Report {
-    @apply rounded bg-white text-black p-4 inline-block m-10 w-4/5 flex flex-col items-end ;
-}
-

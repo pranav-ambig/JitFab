@@ -3,7 +3,6 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 
-
 function App() {
 
   const navigate = useNavigate();

@@ -1,7 +1,6 @@
 import { Line } from 'react-chartjs-2';
 import { useState } from 'react';
 import NavBar from './NavBar';
-import ReportsPage from './ReportsPage';
 import './Analyse.css'
 import {
 	Chart as ChartJS,
@@ -74,7 +73,6 @@ export default function Analyse(){
 							<p className='param'>Smoothness:</p>
 							<input className='pvalue' id='tensionval' type={'range'} onChange={rangeHandler} />
 						</div>
-						{/* <ReportsPage PLID={"abc"} Amount={3} InvLocation={"Sirsi"} ></ReportsPage> */}
 					</div>
 				</div>
 
