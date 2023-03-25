@@ -1,0 +1,97 @@
+.control-pair {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: space-evenly;
+	/* height: 1.5rem; */
+}
+
+#rightside {
+	margin-top: 4rem;
+	width: 50%;
+	height: 100%;
+	/* height: 300px; */
+	background-color: white;
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#leftside {
+	width: 50%;
+	height: 100vh;
+	margin-top: 6rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	/* padding: 1rem; */
+	flex-wrap: wrap;
+	/* background-color: white; */
+}
+
+.param, .pvalue {
+	width: 20%;
+}
+
+#controls {
+	/* background-color: red; */
+	width: 100%;
+	height: 70%;
+}
+
+#product-input {
+	width: 80%;
+	/* position: relative; */
+	margin-top: 5rem;
+	margin-left: 10%;
+	margin-right: 10%;
+	/* margin-bottom: 0; */
+	border-radius: 2rem;
+	border: none;
+	outline: none;
+	padding: 1rem;
+	font-size: 1rem;
+	background-color: #ffffff88;
+	/* opacity: 0.5; */
+}
+
+#product-input:focus {
+	width: 80%;
+	/* height: 2rem; */
+	margin-top: 5rem;
+	margin-left: 10%;
+	margin-right: 10%;
+	/* margin-top: 3rem; */
+	border-radius: 2rem;
+	border: none;
+	outline: none;
+	padding: 1rem;
+	font-size: 1rem;
+	background-color: #ffffff88;
+}
+
+#left-title {
+	position: absolute;
+	/* margin-top: 4rem; */
+	top: 4rem;
+	font-size: 2rem;
+	/* width: 100%; */
+}
+
+#right-title {
+	position: absolute;
+	/* margin-top: 4rem; */
+	top: 4rem;
+	font-size: 2rem;
+	/* width: 100%; */
+}
+
+
+#main-ctn {
+	display: flex;
+	/* justify-content: space-between; */
+	/* align-items: flex-start; */
+	height: 100vh;
+}
