@@ -111,7 +111,7 @@ export default function Analyse(){
 							<p className='param'>Smoothing:</p>
 							<input className='pvalue' id='tensionval' type={'range'} onChange={rangeHandler} />
 						</div>
-						<ReportsPage PLID={"abc"} Amount={3} InvLocation={"Sirsi"} ></ReportsPage>
+						{/* <ReportsPage PLID={"abc"} Amount={3} InvLocation={"Sirsi"} ></ReportsPage> */}
 					</div>
 				</div>
 
