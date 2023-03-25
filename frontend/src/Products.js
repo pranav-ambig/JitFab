@@ -2,6 +2,7 @@ import './Products.css'
 import NavBar from './NavBar';
 
 function Products(){
+
 	return(
 		<div id='ctn'>
 			<NavBar></NavBar>
