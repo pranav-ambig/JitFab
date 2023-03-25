@@ -11,7 +11,7 @@ export default function(){
 	return(
 		<div className='NavBar'>
 			<div id='left'>
-				<p id='title' className='NavbarText'>JitFab</p>
+				<p id='title' className='NavbarText' onClick={gotoHome}>JitFab</p>
 				<p className='NavbarText' onClick={gotoHome}>Home</p>
 				<p className='NavbarText' onClick={gotoProducts}>Products</p>
 				<p className='NavbarText' onClick={gotoAbout}>About</p>
