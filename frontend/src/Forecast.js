@@ -34,11 +34,12 @@ export default function(){
     const storehouses=["Sirsi","Bengaluru","Mumbai","San Francisco"]
     const prodnames=["CP-8811-K9","ISR4321-K9","A9K-920-4SZ-D","A9K-8X100GE-TR"]
     const [statecolor,setstatecolor] = useState("#FEFD98")
-    const [influxvalue,setInflux] = useState(0)
-    const influxvaluehandler = ()=>{
-        console.log("called " , influxvalue)
-        setInflux(influxvalue+1)
-        console.log("called  after set" , influxvalue+1)
+    let [influxvalue,setInflux] = useState(0)
+    let influxvaluehandler = ()=>{
+
+      influxvalue+=1
+        setInflux(influxvalue)
+       return(influxvalue==influxvaluemax) 
     }
     useEffect(()=>{
         if(influxvaluemax<0){
@@ -46,11 +47,14 @@ export default function(){
             
         }else{
             // setstatecolor("#FEFD98")
-            const intrvl = setInterval(()=>{
-                influxvaluehandler()
-                if(influxvalue==influxvaluemax)
-                clearInterval(intrvl)
+            function uff (){
+              setTimeout(()=>{
+                if( !influxvaluehandler())
+                uff()
+                
             },1000)
+            }
+            uff()
         }
 
     },[])
