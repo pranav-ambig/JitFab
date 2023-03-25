@@ -3,6 +3,7 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 
+
 function App() {
 
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function App() {
       <div id='tagline'>Reliable Just-In-Time Solutions</div>
       <img src={require('./animation.gif')}></img>
       <p id='get-started' onClick={gotoProducts} >Get Started</p>
-
+    
     </div>
   );
 }
