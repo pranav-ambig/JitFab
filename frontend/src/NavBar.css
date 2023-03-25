@@ -1,0 +1,34 @@
+.NavBar {
+	background-color: #25202D;
+	height: 4rem;
+	margin: 0;
+	top: 0;
+	position: fixed;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
+  
+  #left {
+	display: flex;
+	width: 40%;
+	justify-content: space-around;
+	height: 4rem;
+	flex-direction: row;
+	align-items: center;
+  }
+  
+  #right {
+	margin-right: 5rem;
+  }
+  
+  #title {
+	font-size: 1.5rem;
+  }
+  
+  .NavbarText {
+	color: #8E7EA4;
+	font-size: 1.2rem;
+	cursor: pointer;
+  }

@@ -75,6 +75,7 @@ img {
   border-radius: 1rem;
   border: 2px solid #25202D;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 #get-started:hover {

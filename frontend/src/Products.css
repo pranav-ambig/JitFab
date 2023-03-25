@@ -1,0 +1,45 @@
+* {
+	font-family: 'Jost';
+}
+
+#strong-title-products{
+	/* top: 13rem; */
+	/* position: fixed; */
+	font-size: 4.5rem;
+	color: #25202D;
+	margin-top: 10rem;
+	/* left: 8rem; */
+	/* text-align: center; */
+  }
+
+#ctn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#product-input {
+	width: 60%;
+	/* height: 2rem; */
+	margin-top: 3rem;
+	border-radius: 2rem;
+	border: none;
+	outline: none;
+	padding: 1rem;
+	font-size: 1rem;
+	background-color: #ffffff88;
+	/* opacity: 0.5; */
+}
+
+#product-input:focus {
+	width: 60%;
+	/* height: 2rem; */
+	margin-top: 3rem;
+	border-radius: 2rem;
+	border: none;
+	outline: none;
+	padding: 1rem;
+	font-size: 1rem;
+	background-color: #ffffff88;
+}
