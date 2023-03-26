@@ -43,6 +43,7 @@ with open("modelarrayClean.pkl","rb") as f:
     trained_models = pickle.load(f)
 
 def Ultimate_out( datasetname ,tempout = [[21432,39989],[23162,46255]]):
+# def Ultimate_out( datasetname ,tempout = [[331,0],[0,0]]):
     
     if datasetname in trained_models:
         return trained_models[datasetname].predict(tempout)

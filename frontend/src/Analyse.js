@@ -56,6 +56,7 @@ export default function Analyse(){
 	const [prodname, setProdName] = useState("")
 	const [tillDate, setTillDate] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 	const [predicted, setPredicted] = useState([13, 14, 15, 16])
+	const [nudgeval, setNudgeval] = useState(0);
 
 	let secondGraphValues = []
 	const updateSGV = ()=>{
@@ -171,6 +172,29 @@ export default function Analyse(){
 		}
 	}
 
+	const nudgeReq = ()=>{
+		let ele = document.getElementById('product-input')
+		let e = document.getElementById('nudgeval-input')
+		// setNudgeval(parseInt(nudgeval-e.value))
+		if (!LstmMode){
+			axios.post('http://127.0.0.1:5000/xgbrt', {
+						"PLID": ele.value,
+						"point": e.value-50
+						})
+						.then(function (response) {
+							if (response["data"] != "Error"){
+								setProdName(response["data"][0])
+								let td = response["data"][1]
+								td[td.length-1] = td[td.length-1]+e.value-50
+								setTillDate(response["data"][1])
+								setPredicted(response["data"][2])
+								updateSGV()
+							}
+							
+			})
+		}
+	}
+
 	return(
 		<div id='maiin-ctn'>
 			<NavBar></NavBar>
@@ -190,6 +214,11 @@ export default function Analyse(){
 							<input className='pvalue' defaultValue={tensionval} id='tensionval' type={'range'} onChange={rangeHandler} />
 						</div>
 
+						{/* <div className='control-pair'>
+							<p className='param'>Nudge by:</p>
+							<input className='pvalue' defaultValue={50} id='nudgeval-input' type={'range'} onChange={nudgeReq} />
+						</div> */}
+
 						<div className='control-pair'>
 							<p id='mode-switch-btn'
 							onClick={()=>{
@@ -199,11 +228,10 @@ export default function Analyse(){
 									reqFromBackendForce(false)
 								else
 									reqFromBackendForce(true)
-								
-								
 							}}
 							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
 						</div>
+						
 						<div className='control-pair'>
 							<p id='mode-switch-btn'
 							onClick={()=>{

@@ -1,20 +1,53 @@
 import random
 import pymongo
+import math
+import os
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client["JitFab"]
 inventories = db["Inventories"]
 
+prods = ['8201-SYS', '88-LC0-36FH', '8800-LC-36FH', '8800-LC-48H', '8808-FC', '8808-SYS', '8812-SYS', '8818-SYS', 'A900-IMA-8Z', 'A99-32X100GE-X-SE', 'A9K-24X10GE-1G-TR', 'A9K-8X100GE-TR', 'A9K-920-12CZ-A', 'A9K-920-12SZ-IM', 'A9K-920-4SZ-D', 'A9K-9901', 'A9K-9903', 'A9K-RSP5-SE', 'A9K-RSP5-TR', 'A9K-RSP880-SE', 'A9K-RSP880-TR', 'A9K1000-ESP100', 'A9K1001-HX', 'A9K1001-X', 'A9K1002-HX', 'C1000-24T-4G-L', 'C1000-48T-4G-L', 'C1111-4P', 'C1111-8P', 'C1111-8PLTExA', 'C1116-4P', 'C1121-8P', 'C8200-1N-4T', 'C8200L-1N-4T', 'C8300-1N1S-6T', 'C8300-2N2S-4T2X', 'C8300-2N2S-6T', 'C8500-12X', 'C8500-12X4QC', 'C8500L-8S4X', 'C9105AXI-B', 'C9105AXW-B', 'C9115AXE-B', 'C9115AXI-B', 'C9120AXE-B', 'C9120AXI-B', 'C9130AXE-B', 'C9130AXI-B', 'C9200-24T-E', 'C9200-48P-A', 'C9200-48P-E', 'C9200-48PXG-E', 'C9200-48T-E', 'C9200L-24P-4G-E', 'C9200L-24P-4X-E', 'C9200L-24T-4G-E', 'C9200L-24T-4X-E', 'C9200L-48P-4G-E', 'C9200L-48P-4X-E', 'C9200L-48PL-4X-E', 'C927-4P', 'C9300-24P', 'C9300-24S', 'C9300-24T', 'C9300-24UX', 'C9300-48H', 'C9300-48P', 'C9300-48S', 'C9300-48T', 'C9300-48UN', 'C9300-48UXM', 'C9300-NM-8X', 'C9300L-24T-4X-A', 'C9300L-48P-4G-E', 'C9300L-48P-4X-A', 'C9300L-48P-4X-E', 'C9300L-48UXG-4X-A', 'C9300X-12Y', 'C9300X-24Y', 'C9400-LC-48U', 'C9400-LC-48UX', 'C9400-PWR-3200AC', 'C9400-SUP-1', 'C9400-SUP-1XL-Y', 'C9400-SUP-1XL', 'C9407R-96U-BNDL-E', 'C9410R-96U-BNDL-A', 'C9500-24Y4C', 'C9500-40X', 'C9500-48Y4C', 'C9600-SUP-1', 'C9606R', 'C9800-40-K9', 'C9K-F1-SSD-240G', 'CBR-D121-DS-MOD', 'CBR-D31-US-MOD', 'CP-7821-K9', 'CP-7841-K9', 'CP-8811-K9', 'CP-8821-K9-BUN', 'CP-8841-3PCC-K9', 'CP-8841-K9', 'CP-8845-K9', 'CP-8851-K9', 'CP-8861-K9', 'CP-8865-3PCC-K9', 'CP-8865-K9', 'CPAK-100G-LR4', 'CS-CODEC-PLUS+', 'CS-CODEC-PRO+', 'CS-DESK-K9', 'CS-DESKPRO-K9', 'CS-KIT-K9', 'CS-KIT-MINI-K9', 'CS-QUADCAM+', 'CS-R55-UNI2-K9+', 'CS-T10-TS+', 'CTS-CAM-P60+', 'DN2-CPU-I6238', 'DN2-CPU-I8276', 'DN2-SD19T61X-EV', 'DS-C9148T-K9', 'DS-C9396T-K9', 'DS-SFP-FC32G-SW', 'DS-X9648-1536K9', 'FPR1010-NGFW-K9', 'FPR4115-NGFW-K9', 'GLC-TE', 'HX-CPU-I6258R', 'HX-SD38T61X-EV', 'IE-4000-8T4G-E', 'IE-4010-16S12P', 'ISR4321-K9', 'ISR4331-K9', 'ISR4351-K9', 'ISR4431-K9', 'ISR4451-X-K9', 'N3K-C3432D-S', 'N540-24Z8Q2C-SYS', 'N540-ACC-SYS', 'N540-PWR400-D', 'N540X-12Z16G-SYS-D', 'N540X-6Z18G-SYS-A', 'N540X-6Z18G-SYS-D', 'N560-4-RSP4', 'N560-4-SYS', 'N9K-C92348GC-X', 'N9K-C93108TC-FX', 'N9K-C93108TC-FX3P', 'N9K-C93180YC-FX3', 'N9K-C93240YC-FX2', 'N9K-C93360YC-FX2', 'N9K-C9336C-FX2', 'N9K-C9348GC-FXP', 'N9K-C93600CD-GX', 'N9K-C9364C-GX', 'N9K-C9364C', 'N9K-C9508-FM-E2', 'N9K-C9508-FM-G', 'N9K-C9508', 'N9K-X97160YC-EX', 'N9K-X9736C-FX', 'NC-57-36H-SE', 'NC-57-36H6D-S', 'NC55-36X100G-A-SE', 'NC55-5504-FC2', 'NC55-5508-FC2', 'NC6-20X100GE-M-C', 'NCS-5501-SE', 'NCS-5504-SYS', 'NCS-5508', 'NCS-55A1-24Q6H-SS', 'NCS-55A1-36H-SE-S', 'NCS-55A1-36H-SYS', 'NCS-55A2-MOD-SYS', 'NCS-55A2-MODS-SYS', 'NCS-57C3-MOD-SYS', 'NCS-57C3-MODS-SYS', 'NCS1001-K9', 'NCS1K4-1.2T-K9', 'NCS1K4-1.2TL-K9', 'NCS2015-SA-DC', 'NCS2K-16-AD-CCOFS=', 'NCS2K-400G-XP=', 'NCS2K-TNCS-2O-K9', 'NCS4202-SA', 'NCS4K-4H-OPW-LO', 'NIM-24A', 'ONS-CFP2-WDM=', 'P-LTEA-EA', 'QDD-400G-FR4-S', 'QDD-4X100G-FR-S', 'QSFP-100G-AOC3M', 'QSFP-100G-CWDM4-S', 'QSFP-100G-DR-S', 'QSFP-100G-ER4L-S', 'QSFP-100G-LR4-S', 'QSFP-100G-SM-SR', 'QSFP-40-100-SRBD', 'QSFP-40G-SR-BD', 'SFP-10-25G-CSR-S', 'SFP-10G-LR-S', 'SFP-10G-LR', 'SFP-25G-SR-S', 'UCS-CPU-A7702', 'UCS-CPU-A7763', 'UCS-CPU-I6226', 'UCS-CPU-I6226R', 'UCS-CPU-I6230', 'UCS-CPU-I6234', 'UCS-CPU-I6238R', 'UCS-CPU-I6240', 'UCS-CPU-I6240R', 'UCS-CPU-I6246', 'UCS-CPU-I6248R', 'UCS-CPU-I6252', 'UCS-CPU-I6338N', 'UCS-CPU-I6346', 'UCS-CPU-I6348', 'UCS-CPU-I6354', 'UCS-CPU-I8260', 'UCS-CPU-I8268', 'UCS-CPU-I8276L', 'UCS-CPU-I8280L', 'UCS-CPU-I8352Y', 'UCS-CPU-I8358', 'UCS-CPU-I8368', 'UCS-CPU-I8380', 'UCS-FI-6454', 'UCS-M2-240GB', 'UCS-ML-128G4RT-H', 'UCS-ML-128G4RW', 'UCS-ML-X64G4RT-H', 'UCS-MR-X16G1RW', 'UCS-MR-X32G2RS-H=', 'UCS-MR-X32G2RT-H', 'UCS-MR-X32G2RW', 'UCS-MR-X64G2RT-H', 'UCS-MR-X64G2RW', 'UCS-MR-X64G4RS-H=', 'UCS-S3260-HDW18T', 'UCSB-B200-M5', 'UCSC-C220-M5SX', 'UCSC-C240-M5SX', 'UCSC-C240-M6SX', 'UCSC-GPU-T4-16', 'UCSX-210C-M6', 'VEDGE-2000-AC-K9', 'WS-C3560CX-12PC-S', 'WS-C3650-48FQM']
+
 def insertRandomInventories(n=10, capRange=(10, 100)):
-	l = []
-	for i in range(n):
-		d = {
-			"capacity": random.randint(*capRange)
-		}
-		l.append(d)
-	inventories.insert_many(l)
+    l = []
+    for i in range(n):
+        d = {
+            "capacity": random.randint(*capRange)
+        }
+        l.append(d)
+    inventories.insert_many(l)
 
 def clearInventories():
-	inventories.delete_many({})
+    inventories.delete_many({})
+
+def randlatlon1():
+    lat = round(random.uniform(-90, 90), 5)
+    long = round(random.uniform(-90, 90), 5)
+    return (lat, long)
+    
+
+def fillInvent():
+    for i in range(10):
+        invent = {}
+        loc = randlatlon1()
+        invent["loc"] = loc
+
+        for i in prods:
+            invent[i] = random.randint(50, 500)
+        
+        inventories.insert_one(invent)
 
 
+
+
+def foo():
+    l = []
+    dir = r'C:\Users\prana\Desktop\Workspaces\Hackathons\Hashcode 11\JitFab\backend\ProductsCleanDatasets'
+    for file in os.scandir(dir):
+        l.append(file.name[:-4])
+    print(l)
+
+fillInvent()
+# print(randlatlon1())
+# clearInventories()
