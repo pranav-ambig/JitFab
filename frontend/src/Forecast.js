@@ -212,12 +212,35 @@ counters.forEach( counter => {
             return <Warehouse Location={e} TotCapacity={Math.random()*1000 + 100} Allocunits={Math.ceil(influxvaluemax*(i+1)/6)} refresh={refreshprop} ></Warehouse>
            })}
            </div>
-        </>:<></>}
+        </>:<>
+          <BinSize>
+
+          </BinSize>
+        </>}
 		</div>
 	)
 }
 
 function Warehouse({Location , TotCapacity , Allocunits,refresh}){
+
+  return<p style={{padding : "40px" , borderRight : "solid black 2px"}} >
+  {refresh==""?"":""}
+    <p>Location : {Location}</p>
+    <p> Total Capacity : {TotCapacity}</p>
+    <p> Need to allocate / Free : {Allocunits}</p>
+  </p>
+}
+function BinSize({Tofit}){
+
+  let tempval =18318
+
+  let XSsize=10
+  let Ssize=50
+  let Msize=0
+  let Lsize=0
+  let XLsize=0
+
+
 
   return<p style={{padding : "40px" , borderRight : "solid black 2px"}} >
   {refresh==""?"":""}
