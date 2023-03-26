@@ -236,10 +236,12 @@ function BinSize({Tofit}){
 
   let XSsize=10
   let Ssize=50
-  let Msize=0
-  let Lsize=0
-  let XLsize=0
+  let Msize=100
+  let Lsize=500
+  let XLsize=2000
 
+  let sizearray=[]
+  while
 
 
   return<p style={{padding : "40px" , borderRight : "solid black 2px"}} >
