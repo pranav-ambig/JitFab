@@ -27,43 +27,57 @@ import { useEffect } from 'react';
     ArcElement,
     Legend
     );
-    // let influxvaluemax = Math.floor(Math.random()*10) -5
-    let influxvaluemax = 10
+    let influxvaluemax = Math.floor(Math.random()*10000)
+    let positive = Math.random()>0.5
+    // let influxvaluemax = 1000
 export default function(){
 
     const storehouses=["Sirsi","Bengaluru","Mumbai","San Francisco"]
     const prodnames=["CP-8811-K9","ISR4321-K9","A9K-920-4SZ-D","A9K-8X100GE-TR"]
     const [statecolor,setstatecolor] = useState("#FEFD98")
-    let [influxvalue,setInflux] = useState(0)
-    let influxvaluehandler = ()=>{
+    const [refreshprop, refresher] = useState("second")
+    function cb (){
 
-      influxvalue+=1
-        setInflux(influxvalue)
-       return(influxvalue==influxvaluemax) 
-    }
-    useEffect(()=>{
-        if(influxvaluemax<0){
-            setstatecolor("#f70d1a")
-            
+      influxvaluemax = Math.floor(Math.random()*10000)
+    positive = Math.random()>0.5
+
+      if(!positive){
+        setstatecolor("#f70d1a")
+      }
+      const counters = document.querySelectorAll('.value');
+let speed = 200;
+speed*=Math.ceil(Math.log10(influxvaluemax))
+console.log(counters);
+counters.forEach( counter => {
+   const animate = () => {
+      const value = +counter.getAttribute('akhi');
+      const data = +counter.innerText;
+     
+      const time = value / speed;
+     if(data < value) {
+      // if(positive)
+          counter.innerText =  Math.ceil(data + time);
+          // else
+          // counter.innerText = "-" + Math.ceil(data + time);
+          setTimeout(animate, 1);
         }else{
-            // setstatecolor("#FEFD98")
-            let timerstop = false
-            function uff (){
-              
-              setTimeout(()=>{
-                if( !timerstop && !influxvaluehandler())
-                uff()
-                else {
-                  timerstop=true;
-                  console.log("true set");
-                }
-                
-            },100)
-            }
-            uff()
+          console.log(value);
+          counter.innerText = value;
         }
+     
+   }
+   
+   animate();
+});
 
-    },[])
+  
+
+    }
+    setTimeout(cb, 400);
+    useEffect(cb,[refreshprop])
+
+
+    
     const data = {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [
@@ -94,12 +108,15 @@ export default function(){
     
 
 
-    const [mode,setmode] = useState("Storehouse")
+    const [mode,setmode] = useState("Product")
     const navigate = useNavigate();
+    
     // const gotoAnalyse = ()=>{navigate('/analyse')}
 
 	return(
-		<div style={{ padding : "10px"}} >
+		<div refresh = {refreshprop} style={{ padding : "10px"}} >
+   <p> {refreshprop==""?"":""}</p>
+   {console.log("refreshed now")}
         <NavBar></NavBar>
         <img style={{width: "150px" , height : "150px"}} src={require("./clock.gif")} ></img>
         <br></br>
@@ -110,7 +127,9 @@ export default function(){
         <span style={{left : "10px"}} ><p  onClick={()=>setmode(mode=="Product"?"Storehouses" :"Product")}>Switch to {mode=="Product"?"Storehouses" :"Product" } </p> </span>
         <p  style=  {{fontSize : "40px" , color : "black"}} >{mode} Forecast</p>
         </div>
-        <select style={{  margin : "50px" , scale : "2"}}>
+        <select onClick={()=>{
+          refresher("eg")
+        }} style={{  margin : "50px" , scale : "2"}}>
         {mode=="Product"?prodnames.map((e,i)=>{
                 return<option style={{scale : "2"}}  value={e} >{e}</option>
             }) : storehouses.map((e,i)=>{
@@ -118,20 +137,32 @@ export default function(){
             }) }
         {}
         </select>
-       <div style={{ padding : "5px", borderRadius : "8px" ,backgroundColor : statecolor , height: "150px", top :"180px"  , left :"420px", width  : "250px" , position : "absolute" }}>
-        <p style={{fontSize : 40 , textAlign : "center"}}> {influxvaluemax<0?"-":""} {influxvalue}</p>
+        <h2 style={{top :"80px"  , left :"420px", width  : "250px" , position : "absolute"}}>Expected Influx :</h2>
+       <div style={{ padding : "5px", textAlign : "center", borderRadius : "8px" ,backgroundColor : statecolor , height: "150px", top :"180px"  , left :"420px", width  : "250px" , position : "absolute" }}>
+      <p style={{fontSize : 40}}>{positive?"":"-"}   <div className='value' akhi={influxvaluemax.toString()} style={{fontSize : 40 , textAlign : "center", display : 'inline-block'}}>  0 </div> </p>  
        </div>
-        <div style={{ padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , top :"80px"  , right :"20px", width  : "200px" , position : "absolute" }}>
-        {mode=="Product"?<></>:<>
+      { mode=="Product"?<></> :   <div style={{ padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , top :"80px"  , right :"20px", width  : "400px" , position : "absolute" }}>
+        
       
       <div style={{   }} > <Pie  data={data} /></div>
-       </>}
-        </div>
+      
+        </div>}
         {mode=="Product"?<>
-           <div style={{ padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , left :"80px"  , bottom :"20px", height : "250px" , width  : "1200px" , position : "absolute" }}>
-
+           <div style={{ display : "flex" , justifyItems : "center", alignItems : "center", padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , left :"80px"  , bottom :"20px", height : "250px" , width  : "1200px" , position : "absolute" }}>
+           { storehouses.map((e,i)=>{
+            return <Warehouse Location={e} TotCapacity={Math.random()*5000 + 7000 } Allocunits={Math.ceil(influxvaluemax*(i+1)/6)} ></Warehouse>
+           })}
            </div>
         </>:<></>}
 		</div>
 	)
+}
+
+function Warehouse({Location , TotCapacity , Allocunits}){
+
+  return<p style={{padding : "40px" , borderRight : "solid black 2px"}} >
+    <p>Location : {Location}</p>
+    <p> Total Capacity : {TotCapacity}</p>
+    <p> Need to allocate / Free : {Allocunits}</p>
+  </p>
 }
