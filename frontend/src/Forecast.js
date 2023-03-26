@@ -39,7 +39,8 @@ export default function(){
     function cb (){
 
       influxvaluemax = Math.floor(Math.random()*10000)
-    positive = Math.random()>0.5
+    positive = true
+    document.getElementById("uniid").innerText=0
 
       if(!positive){
         setstatecolor("#f70d1a")
@@ -75,35 +76,65 @@ counters.forEach( counter => {
     }
     setTimeout(cb, 400);
     useEffect(cb,[refreshprop])
+    const [data, setdata] = useState({
+  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  datasets: [
+    {
+      label: '# of Votes',
+      data: [Math.ceil(Math.random()*30) + 5 , Math.ceil(Math.random()*20) +5, Math.ceil(Math.random()*40) +5, Math.ceil(Math.random()*50) +3, Math.ceil(Math.random()*10) +5, Math.ceil(Math.random()*60) +2],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+      ],
+      borderWidth: 1,
+    },
+  ],
+})
 
 
-    
-    const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [
-          {
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-          },
-        ],
-      };
+    function piedata(){
+        console.log("piedata tirg");
+        setdata( {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [
+            {
+              label: '# of Votes',
+              data: [Math.ceil(Math.random()*10) +5 , Math.ceil(Math.random()*10) +5, Math.ceil(Math.random()*10) +5, Math.ceil(Math.random()*10) +3, Math.ceil(Math.random()*10) +5, Math.ceil(Math.random()*10) +2],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
+            },
+          ],
+        })
+    }
+
+  useEffect(piedata,[refreshprop])
       
     
 
@@ -127,30 +158,32 @@ counters.forEach( counter => {
         <span style={{left : "10px"}} ><p  onClick={()=>setmode(mode=="Product"?"Storehouses" :"Product")}>Switch to {mode=="Product"?"Storehouses" :"Product" } </p> </span>
         <p  style=  {{fontSize : "40px" , color : "black"}} >{mode} Forecast</p>
         </div>
-        <select onClick={()=>{
-          refresher("eg")
-        }} style={{  margin : "50px" , scale : "2"}}>
+        <select  onChange={()=>{
+          refresher(Math.random())
+          console.log("refreshed by optin")
+          
+        }}  style={{  margin : "50px" , scale : "2"}}>
         {mode=="Product"?prodnames.map((e,i)=>{
-                return<option style={{scale : "2"}}  value={e} >{e}</option>
+                return<option style={{scale : "2"}}   value={e} >{e}</option>
             }) : storehouses.map((e,i)=>{
-                return<option  style={{scale : "2"}} value={e} >{e}</option>
+                return<option  style={{scale : "2"}}   value={e} >{e}</option>
             }) }
         {}
         </select>
         <h2 style={{top :"80px"  , left :"420px", width  : "250px" , position : "absolute"}}>Expected Influx :</h2>
        <div style={{ padding : "5px", textAlign : "center", borderRadius : "8px" ,backgroundColor : statecolor , height: "150px", top :"180px"  , left :"420px", width  : "250px" , position : "absolute" }}>
-      <p style={{fontSize : 40}}>{positive?"":"-"}   <div className='value' akhi={influxvaluemax.toString()} style={{fontSize : 40 , textAlign : "center", display : 'inline-block'}}>  0 </div> </p>  
+      <p style={{fontSize : 40}}>{positive?"":"-"}   <div id="uniid" className='value' akhi={influxvaluemax.toString()} style={{fontSize : 40 , textAlign : "center", display : 'inline-block'}}>  0 </div> </p>  
        </div>
       { mode=="Product"?<></> :   <div style={{ padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , top :"80px"  , right :"20px", width  : "400px" , position : "absolute" }}>
         
       
-      <div style={{   }} > <Pie  data={data} /></div>
+      <div style={{   }} > <Pie data={data} /></div>
       
         </div>}
         {mode=="Product"?<>
            <div style={{ display : "flex" , justifyItems : "center", alignItems : "center", padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , left :"80px"  , bottom :"20px", height : "250px" , width  : "1200px" , position : "absolute" }}>
            { storehouses.map((e,i)=>{
-            return <Warehouse Location={e} TotCapacity={Math.random()*5000 + 7000 } Allocunits={Math.ceil(influxvaluemax*(i+1)/6)} ></Warehouse>
+            return <Warehouse Location={e} TotCapacity={Math.random()*5000 + 7000 } Allocunits={Math.ceil(influxvaluemax*(i+1)/6)} refresh={refreshprop} ></Warehouse>
            })}
            </div>
         </>:<></>}
@@ -158,9 +191,10 @@ counters.forEach( counter => {
 	)
 }
 
-function Warehouse({Location , TotCapacity , Allocunits}){
+function Warehouse({Location , TotCapacity , Allocunits,refresh}){
 
   return<p style={{padding : "40px" , borderRight : "solid black 2px"}} >
+  {refresh}
     <p>Location : {Location}</p>
     <p> Total Capacity : {TotCapacity}</p>
     <p> Need to allocate / Free : {Allocunits}</p>
