@@ -1,7 +1,7 @@
 import { Line } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import NavBar from './NavBar';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import './Analyse.css'
 import axios from 'axios';
 import Forecast from './Forecast';
@@ -50,7 +50,7 @@ export const xgbOptions = {
 export default function Analyse(){
 
 	const navigate = useNavigate();
-	const gotoForecast = ()=>{navigate('/forecast')}
+	// const gotoForecast = ()=>{navigate('/forecast')}
 	const [tensionval, setTensionVal] = useState(0)
 	const [LstmMode, setLstmMode] = useState(false)
 	const [prodname, setProdName] = useState("")
@@ -235,10 +235,9 @@ export default function Analyse(){
 						<div className='control-pair'>
 							<p id='mode-switch-btn'
 							onClick={()=>{
-								gotoForecast()
+								navigate('/forecast', {state:{"PLID":prodname, "qty":predicted[0]}})
 							}	}
-							><img width={{width: "100px"}} src={require("./clock.gif")} ></img></p>
-							
+							>View Forecast</p>
 						</div>
 							
 					</div>

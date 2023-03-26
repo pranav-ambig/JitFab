@@ -10,7 +10,7 @@ CORS(app)
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client["JitFab"]
-inventories = client["Inventories"]
+inventories = db["Inventories"]
 products = db["Products"]
 
 @app.route('/lstm', methods=['GET', 'POST'])
@@ -61,3 +61,17 @@ def getProductsXGBRT():
 	else:
 		print("d err")
 		return "Error"
+
+@app.route('/invent', methods=['GET', 'POST'])
+def invent():
+	d = json.loads(request.data)
+	l = inventories.find({})
+	out = []
+	c = 0
+	for i in l:
+		if c == d["num"]:
+			break
+		out.append(i[d["PLID"]])
+		c += 1
+	print([{"quan":out}])
+	return [{"quan":out}]

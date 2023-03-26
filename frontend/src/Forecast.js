@@ -1,9 +1,10 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import "./forecast.css"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
 import { useState } from 'react';
+import axios from 'axios';
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -36,9 +37,33 @@ export default function(){
     const prodnames=["CP-8811-K9","ISR4321-K9","A9K-920-4SZ-D","A9K-8X100GE-TR"]
     const [statecolor,setstatecolor] = useState("#FEFD98")
     const [refreshprop, refresher] = useState("second")
+    // const [quan, setQuan] = useState([0, 0, 0, 0]);
+    // let quan = [];
+    let loc = useLocation();
+
+    // if (quan === [0, 0, 0, 0]){
+    //   console.log('test', quan)
+    //   axios.post('http://127.0.0.1:5000/invent', {
+    //           "num":4,
+    //           "PLID":loc.state["PLID"]
+    //           })
+    //           .then(function (response) {
+    //             response = response["data"][0]["quan"]
+    //             console.log("test", response)
+    //             setQuan(response)
+    //             // console.log("test1", response["quan"])
+    //             // quan = response
+    //             // setQuan(response["quan"])
+    //             // console.log("test", quan)
+    //           })
+    // }
+      
+
+    // console.log("test", loc.state)
     function cb (){
 
-      influxvaluemax = Math.floor(Math.random()*10000)
+      // influxvaluemax = Math.floor(Math.random()*10000)
+      influxvaluemax = loc.state["qty"]
     positive = true
     document.getElementById("uniid").innerText=0
 
@@ -183,7 +208,7 @@ counters.forEach( counter => {
         {mode=="Product"?<>
            <div style={{ display : "flex" , justifyItems : "center", alignItems : "center", padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , left :"80px"  , bottom :"20px", height : "250px" , width  : "1200px" , position : "absolute" }}>
            { storehouses.map((e,i)=>{
-            return <Warehouse Location={e} TotCapacity={Math.random()*5000 + 7000 } Allocunits={Math.ceil(influxvaluemax*(i+1)/6)} refresh={refreshprop} ></Warehouse>
+            return <Warehouse Location={e} TotCapacity={Math.random()*1000 + 100} Allocunits={Math.ceil(influxvaluemax*(i+1)/6)} refresh={refreshprop} ></Warehouse>
            })}
            </div>
         </>:<></>}
@@ -194,7 +219,7 @@ counters.forEach( counter => {
 function Warehouse({Location , TotCapacity , Allocunits,refresh}){
 
   return<p style={{padding : "40px" , borderRight : "solid black 2px"}} >
-  {refresh}
+  {refresh==""?"":""}
     <p>Location : {Location}</p>
     <p> Total Capacity : {TotCapacity}</p>
     <p> Need to allocate / Free : {Allocunits}</p>
