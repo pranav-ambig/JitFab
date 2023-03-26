@@ -102,7 +102,7 @@ counters.forEach( counter => {
     setTimeout(cb, 400);
     useEffect(cb,[refreshprop])
     const [data, setdata] = useState({
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  labels: ['A9K-RSP5-SE', 'C927-4P', 'A99-32X100GE-X-SE', 'C9300X-24Y', 'C9500-40X', 'NCS-57C3-MODS-SYS'],
   datasets: [
     {
       label: '# of Votes',
@@ -132,7 +132,7 @@ counters.forEach( counter => {
     function piedata(){
         console.log("piedata tirg");
         setdata( {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: ['A9K-RSP5-SE', 'C927-4P', 'A99-32X100GE-X-SE', 'C9300X-24Y', 'C9500-40X', 'NCS-57C3-MODS-SYS'],
           datasets: [
             {
               label: '# of Votes',
@@ -206,6 +206,7 @@ counters.forEach( counter => {
       
         </div>}
         {mode=="Product"?<>
+        <h2>Expected influx on a per storehouse basis :</h2>
            <div style={{ display : "flex" , justifyItems : "center", alignItems : "center", padding : "5px", borderRadius : "8px" ,backgroundColor : "#FEFD98" , left :"80px"  , bottom :"20px", height : "250px" , width  : "1200px" , position : "absolute" }}>
            { storehouses.map((e,i)=>{
             return <Warehouse Location={e} TotCapacity={Math.random()*1000 + 100} Allocunits={Math.ceil(influxvaluemax*(i+1)/6)} refresh={refreshprop} ></Warehouse>
