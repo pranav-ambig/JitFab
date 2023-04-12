@@ -31,7 +31,7 @@ export const lstmOptions = {
 	plugins: {
 		title: {
 			display:true,
-			text: 'LSTM'
+			text: 'SariMax'
 		}
 	}
 }
@@ -103,7 +103,7 @@ export default function Analyse(){
 		if (e.which == 13){
 			let ele = document.getElementById('product-input')
 			if (LstmMode){
-				axios.post('http://127.0.0.1:5000/lstm', {
+				axios.post('http://127.0.0.1:5000/sarimax', {
 					"PLID": ele.value
 					})
 					.then(function (response) {
@@ -229,7 +229,7 @@ export default function Analyse(){
 								else
 									reqFromBackendForce(true)
 							}}
-							>Switch to {LstmMode?"XG Boost":"LSTM"} Mode</p>
+							>Switch to {LstmMode?"XG Boost":"SariMax"} Mode</p>
 						</div>
 						
 						<div className='control-pair'>

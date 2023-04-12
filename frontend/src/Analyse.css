@@ -68,6 +68,11 @@
 	text-align: center;
 }
 
+.pvalue {
+	accent-color: #25202D;
+	transition: all 0.1s ease;
+}
+
 #controls {
 	/* background-color: red; */
 	width: 100%;

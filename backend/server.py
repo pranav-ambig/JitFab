@@ -3,7 +3,7 @@ from flask_cors import CORS
 import pymongo
 import json
 from Xgkabaap import Ultimate_out
-# from sarimaforecast import Ultimate_out as Ultimate_out2
+from sarimaforecast import Ultimate_out as Ultimate_out2
 import pickle
 
 app = Flask(__name__)
@@ -36,16 +36,16 @@ def getProductsXG():
 	out =  list(map(int, out[0]))
 	return [res['PLID'], res['Booked_Qty'][-12:], out[:4]]
 
-@app.route('/sarima', methods=['GET', 'POST'])
-def getProductsXG():
+@app.route('/sarimax', methods=['GET', 'POST'])
+def getProductsSar():
 	d = json.loads(request.data)
 	res = products.find_one(d)
 	bk = list(map(int, res["Booked_Qty"]))
-	out = Ultimate_out(d["PLID"]+".csv")
+	out = Ultimate_out2(d["PLID"]+".csv")
 	if out == "Sorry too low on **ata":
 		return "Error"
 	
-	out = Ultimate_out(d["PLID"]+".csv", [[bk[-4],bk[-3]], [bk[-2], bk[-1]]])
+	out = Ultimate_out2(d["PLID"]+".csv", [[bk[-4],bk[-3]], [bk[-2], bk[-1]]])
 	out =  list(map(int, out[0]))
 	return [res['PLID'], res['Booked_Qty'][-12:], out[:4]]
 
